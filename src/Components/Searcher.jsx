@@ -14,7 +14,7 @@ class Searcher extends React.Component {
       participants: "",
       price: "",
       type: "",
-      record: {},
+      record: [],
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,7 +38,11 @@ class Searcher extends React.Component {
         console.log(response.config);
 
         this.setState({ activity: response.data.activity });
+        this.setState({
+          record: [...this.state.record, response.data.activity],
+        });
         console.log("activity ==== " + response.data.activity);
+        console.log("array state is currently " + this.state.record);
       });
 
     console.log("button pressed");
@@ -48,6 +52,9 @@ class Searcher extends React.Component {
   handleChange = () => {};
 
   render() {
+    const listItems = this.state.record.map((number) => (
+      <li className="list_01">{number}</li>
+    ));
     return (
       <Container fluid="flex">
         <Row className="topBar flex-auto">
@@ -72,6 +79,12 @@ class Searcher extends React.Component {
           </div>
           <h1 className="text_02" style={{ textAlign: "center" }}>
             {this.state.activity}
+          </h1>
+        </Row>
+        <Row>
+          <h1 className="text_02" style={{ textAlign: "center" }}>
+            {/* {this.state.record} */}
+            {listItems}
           </h1>
         </Row>
       </Container>
